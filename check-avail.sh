@@ -1,13 +1,21 @@
 #!/bin/bash
 
-for number in {1..16}
-do
-    wc=$(ssh -o 'StrictHostKeyChecking no' ti$number '((ps aux | grep -v grep) | grep mate-session) | wc -l')
-    if [ "$wc" = "0" ]
-    then
-        echo -e "ti$number is \033[0;32mavailable\033[0m"
-    else
-        echo -e "ti$number is \033[0;31mnot available\033[0m"
-    fi
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+for i in $(seq 1 18); do
+        printf "ti$i "
+        ANS=$(ssh -oStrictHostKeyChecking=no ti$i 2>/dev/null 'ps aux | grep -v grep | grep mate-session | wc -l')
+        if [ -z $ANS ]; then
+                printf "${RED}not reachable${NC}\n"
+        else
+                if (( $ANS > 1 )); then
+                        printf "${RED}in use${NC}\n"
+                else
+                        printf "${GREEN}free${NC}\n"
+                fi
+        fi
 done
 exit 0
+
