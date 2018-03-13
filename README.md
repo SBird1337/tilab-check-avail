@@ -1,5 +1,5 @@
 # tilab-check-avail
-ssh availability checker for lazy students
+ssh availability checker for lazy students of the Vienna university of Technology
 
 # Usage
 1) clone this repository on your tilab account you wish to use it on: `git clone https://github.com/SBird1337/tilab-check-avail`
